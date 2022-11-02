@@ -3,11 +3,11 @@
 
 echo "Running mount script"
 
-# sleep until ebs is attached
-sleep 100
+# sleep until ebs is attached ()
+sleep 60
 
 # list block devices information 
-sudo lsblk -f
+# sudo lsblk -f
 
 # add format to block device
 sudo mkfs -t xfs /dev/xvdh

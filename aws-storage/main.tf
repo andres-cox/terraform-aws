@@ -2,33 +2,34 @@ resource "aws_instance" "acox_instance" {
   ami               = var.instance_ami
   instance_type     = var.instance_type
   availability_zone = var.availability_zone
-  
+
   tags = {
     Name = var.instance_name
   }
   security_groups = ["${aws_security_group.acox_sg.name}"]
   key_name        = var.aws_key_name
-  user_data = file("ebs-mount.sh")
-  
+  user_data       = file("ebs-mount.sh")
 
-#   connection {
-#     type        = "ssh"
-#     user        = "ec2-user"
-#     private_key = file("../acox-key.pem")
-#     host        = aws_instance.acox_instance.public_ip
-#   }
+}
 
-#   provisioner "file" {
-#     source      = "ebs-mount.sh"
-#     destination = "/tmp/ebs-mount.sh"
-#   }
+resource "null_resource" "data_config" {
+  depends_on = ["aws_volume_attachment.ebs_attachment", "aws_instance.acox_instance"]
 
-#   provisioner "remote-exec" {
-#     inline = [
-#       "chmod +x /tmp/ebs-mount.sh",
-#       "/tmp/ebs-mount.sh",
-#     ]
-#   }
+  triggers = {
+    instance_ip = aws_instance.acox_instance.public_ip
+  }
+
+  ## run unmount commands when destroying the data volume
+  provisioner "remote-exec" {
+    when = destroy
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      private_key = file("../acox-key.pem")
+      host        = self.triggers.instance_ip
+    }
+    inline = ["sudo umount /data"]
+  }
 }
 
 resource "aws_ebs_volume" "acox_ebs" {
