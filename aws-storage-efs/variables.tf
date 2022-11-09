@@ -10,10 +10,16 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
-variable "instance_name" {
+variable "instance_name_1" {
   description = "Value of the Name Tag for the EC2 instance"
   type        = string
-  default     = "acox-instance"
+  default     = "acox-instance-1"
+}
+
+variable "instance_name_2" {
+  description = "Value of the Name Tag for the EC2 instance"
+  type        = string
+  default     = "acox-instance-2"
 }
 
 variable "aws_security_groups" {
@@ -28,13 +34,13 @@ variable "aws_key_name" {
   default     = "acox-key"
 }
 
-variable "availability_zone" {
+variable "availability_zone_1" {
   description = "availability zone instance 1"
   type        = string
   default     = "us-east-1a"
 }
 
-variable "availability_zone" {
+variable "availability_zone_2" {
   description = "availability zone instance 2"
   type        = string
   default     = "us-east-1b"
