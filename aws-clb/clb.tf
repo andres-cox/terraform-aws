@@ -19,7 +19,11 @@ resource "aws_elb" "acox_clb" {
     target              = "HTTP:80/"
   }
 
-  instances                   = [aws_instance.acox_instance_1.id]
+  instances = [
+    module.acox_instance_1.instance_id,
+    module.acox_instance_2.instance_id,
+    module.acox_instance_3.instance_id
+  ]
   cross_zone_load_balancing   = true
   idle_timeout                = 300
   connection_draining         = true
