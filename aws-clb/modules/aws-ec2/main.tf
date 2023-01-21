@@ -7,4 +7,15 @@ resource "aws_instance" "acox_instance" {
   user_data              = file("${path.module}/startup.sh")
   key_name               = var.aws_key_name
   tags                   = var.tags
+  monitoring             = true
+  ebs_optimized          = true
+
+  root_block_device {
+    encrypted = true
+  }
+
+  metadata_options {
+    http_endpoint = "disabled"
+    http_tokens   = "optional"
+  }
 }

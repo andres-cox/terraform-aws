@@ -1,15 +1,3 @@
-variable "aws_security_groups" {
-  description = "aws security groups"
-  type        = list(string)
-  default     = ["acox-sg"]
-}
-
-variable "availability_zone_1" {
-  description = "availability zone instance 1"
-  type        = string
-  default     = "us-east-1a"
-}
-
 variable "instance_name_1" {
   description = "Value of the Name Tag for the EC2 instance"
   type        = string

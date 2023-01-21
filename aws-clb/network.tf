@@ -33,6 +33,7 @@ resource "aws_security_group" "acox_ec2_sg" {
   }
 
   egress {
+    description      = "Internet Access"
     from_port        = 0
     to_port          = 0
     protocol         = "-1"
@@ -59,6 +60,7 @@ resource "aws_security_group" "acox_clb_sg" {
   }
 
   egress {
+    description      = "Internet Access"
     from_port        = 0
     to_port          = 0
     protocol         = "-1"
