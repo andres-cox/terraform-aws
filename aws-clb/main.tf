@@ -1,11 +1,3 @@
-# module "default_subnets" {
-#   source = "./modules/aws-subnet"
-
-#   for_each = var.ec2_instances
-#   availability_zone      = each.value.availability_zone
-
-# }
-
 module "acox_instances" {
   source = "./modules/aws-ec2"
 
