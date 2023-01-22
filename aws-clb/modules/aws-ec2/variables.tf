@@ -27,11 +27,6 @@ variable "vpc_security_group_ids" {
   type        = list(string)
 }
 
-variable "subnet_id" {
-  description = "subnet id"
-  type        = string
-}
-
 variable "tags" {
   description = "Tags to set on the bucket."
   type        = map(string)

@@ -3,14 +3,6 @@ resource "aws_default_vpc" "vpc_default" {
 
 }
 
-resource "aws_default_subnet" "subnet_ec2_1" {
-  availability_zone = "us-east-1a"
-}
-
-resource "aws_default_subnet" "subnet_ec2_2" {
-  availability_zone = "us-east-1b"
-}
-
 resource "aws_security_group" "acox_ec2_sg" {
   name        = "acox-ssh-http"
   description = "Allow SSH and HTTP traffic"
@@ -25,11 +17,11 @@ resource "aws_security_group" "acox_ec2_sg" {
   }
 
   ingress {
-    description = "HTTP connection"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    description     = "HTTP connection for Load Balancer"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.acox_clb_sg.id]
   }
 
   egress {

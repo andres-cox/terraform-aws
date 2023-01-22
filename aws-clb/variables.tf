@@ -1,17 +1,19 @@
-variable "instance_name_1" {
-  description = "Value of the Name Tag for the EC2 instance"
-  type        = string
-  default     = "acox-instance-1"
-}
+variable "ec2_instances" {
+  description = "Map of project names to configuration."
+  type        = map(any)
 
-variable "instance_name_2" {
-  description = "Value of the Name Tag for the EC2 instance"
-  type        = string
-  default     = "acox-instance-2"
-}
-
-variable "instance_name_3" {
-  description = "Value of the Name Tag for the EC2 instance"
-  type        = string
-  default     = "acox-instance-3"
+  default = {
+    acox_1 = {
+      name              = "acox-instance-1",
+      availability_zone = "us-east-1a"
+    },
+    acox_2 = {
+      name              = "acox-instance-2",
+      availability_zone = "us-east-1b"
+    },
+    acox_3 = {
+      name              = "acox-instance-3",
+      availability_zone = "us-east-1c"
+    },
+  }
 }

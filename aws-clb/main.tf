@@ -1,32 +1,20 @@
-module "acox_instance_1" {
+# module "default_subnets" {
+#   source = "./modules/aws-subnet"
+
+#   for_each = var.ec2_instances
+#   availability_zone      = each.value.availability_zone
+
+# }
+
+module "acox_instances" {
   source = "./modules/aws-ec2"
 
+  for_each = var.ec2_instances
+
+  availability_zone      = each.value.availability_zone
   vpc_security_group_ids = [aws_security_group.acox_ec2_sg.id]
-  subnet_id              = aws_default_subnet.subnet_ec2_1.id
 
   tags = {
-    Name = var.instance_name_1
-  }
-}
-
-module "acox_instance_2" {
-  source = "./modules/aws-ec2"
-
-  vpc_security_group_ids = [aws_security_group.acox_ec2_sg.id]
-  subnet_id              = aws_default_subnet.subnet_ec2_1.id
-
-  tags = {
-    Name = var.instance_name_2
-  }
-}
-
-module "acox_instance_3" {
-  source = "./modules/aws-ec2"
-
-  vpc_security_group_ids = [aws_security_group.acox_ec2_sg.id]
-  subnet_id              = aws_default_subnet.subnet_ec2_1.id
-
-  tags = {
-    Name = var.instance_name_3
+    Name = each.value.name
   }
 }
