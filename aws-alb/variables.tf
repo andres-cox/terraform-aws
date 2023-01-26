@@ -1,19 +1,31 @@
-variable "ec2_instances" {
+variable "ec2_instances_a" {
   description = "Map of project names to configuration."
   type        = map(any)
 
   default = {
-    acox_1 = {
-      name              = "acox-instance-1",
-      availability_zone = "us-east-1a"
+    acox_a_1 = {
+      name = "acox-instance-a-1",
+      # availability_zone = "us-east-1a"
     },
-    acox_2 = {
-      name              = "acox-instance-2",
-      availability_zone = "us-east-1b"
+    acox_a_2 = {
+      name = "acox-instance-a-2",
+      # availability_zone = "us-east-1b"
+    }
+  }
+}
+
+variable "ec2_instances_b" {
+  description = "Map of project names to configuration."
+  type        = map(any)
+
+  default = {
+    acox_b_1 = {
+      name = "acox-instance-b-1",
+      # availability_zone = "us-east-1a"
     },
-    acox_3 = {
-      name              = "acox-instance-3",
-      availability_zone = "us-east-1c"
-    },
+    acox_b_2 = {
+      name = "acox-instance-b-2",
+      # availability_zone = "us-east-1b"
+    }
   }
 }

@@ -8,7 +8,7 @@ output "instance_id" {
   value       = aws_instance.acox_instance.id
 }
 
-output "subnet_id" {
-  description = "Subnet id of instance"
-  value       = aws_default_subnet.subnet_ec2.id
-}
+# output "subnet_id" {
+#   description = "Subnet id of instance"
+#   value       = aws_default_subnet.subnet_ec2.id
+# }

@@ -3,7 +3,7 @@ resource "aws_lb" "acox_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.acox_alb_sg.id]
-  subnets            = values(module.acox_instances)[*].subnet_id
+  subnets            = [aws_subnet.subnet_a.id, aws_subnet.subnet_b.id]
 
   enable_deletion_protection = false
 
@@ -12,23 +12,23 @@ resource "aws_lb" "acox_alb" {
   }
 }
 
-resource "aws_lb_listener" "acox_alb_listener" {
-  load_balancer_arn = aws_lb.acox_alb.arn
-  port              = "80"
-  protocol          = "HTTP"
-#   ssl_policy        = "ELBSecurityPolicy-2016-08"
-#   certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+# resource "aws_lb_listener" "acox_alb_listener" {
+#   load_balancer_arn = aws_lb.acox_alb.arn
+#   port              = "80"
+#   protocol          = "HTTP"
+#   #   ssl_policy        = "ELBSecurityPolicy-2016-08"
+#   #   certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
 
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.acox_tg.arn
-  }
-}
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.acox_tg.arn
+#   }
+# }
 
 resource "aws_security_group" "acox_alb_sg" {
   name        = "acox-alb-http"
   description = "Allow HTTP traffic"
-  vpc_id      = aws_default_vpc.vpc_default.id
+  vpc_id      = aws_vpc.main.id
 
   ingress {
     description = "HTTP connection"

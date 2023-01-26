@@ -1,9 +1,9 @@
 resource "aws_lb_target_group" "acox_tg" {
-  name        = "acox-tg"
+  name        = var.tg_name
   port        = 80
   protocol    = "HTTP"
   target_type = "instance"
-  vpc_id      = aws_default_vpc.vpc_default.id
+  vpc_id      = var.vpc_id
 
   health_check {
     enabled             = true
@@ -19,6 +19,6 @@ resource "aws_lb_target_group" "acox_tg" {
 
 resource "aws_lb_target_group_attachment" "test" {
   target_group_arn = aws_lb_target_group.acox_tg.arn
-  target_id        = values(module.acox_instances)[0].instance_id
+  target_id        = var.target_id
   port             = 80
 }
