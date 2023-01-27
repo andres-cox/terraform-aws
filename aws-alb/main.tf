@@ -29,10 +29,26 @@ module "acox_instances_region_b" {
 module "acox_tg_1" {
   source = "./modules/aws-tg"
 
-  for_each = module.acox_instances_region_a
+  for_each     = module.acox_instances_region_a
+  listener_arn = aws_lb_listener.acox_alb_listener.arn
 
-  vpc_id = aws_vpc.main.id
-  tg_name = "acox-tg-a"
+  vpc_id    = aws_vpc.main.id
+  tg_name   = "acox-tg-a"
   target_id = each.value.instance_id
+  # load_balancer_arn = aws_lb.acox_alb.arn
+  condition = "/tg1"
+
+}
+
+module "acox_tg_2" {
+  source = "./modules/aws-tg"
+
+  for_each     = module.acox_instances_region_b
+  listener_arn = aws_lb_listener.acox_alb_listener.arn
+  vpc_id       = aws_vpc.main.id
+  tg_name      = "acox-tg-b"
+  target_id    = each.value.instance_id
+  # load_balancer_arn = aws_lb.acox_alb.arn
+  condition = "/tg2"
 
 }

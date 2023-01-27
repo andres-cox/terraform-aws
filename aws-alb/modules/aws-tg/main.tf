@@ -22,3 +22,26 @@ resource "aws_lb_target_group_attachment" "test" {
   target_id        = var.target_id
   port             = 80
 }
+
+
+resource "aws_lb_listener_rule" "static" {
+  listener_arn = var.listener_arn
+  # priority     = var.prioriy
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.acox_tg.arn
+  }
+
+  condition {
+    path_pattern {
+      values = [var.condition]
+    }
+  }
+
+  # condition {
+  #   host_header {
+  #     values = ["example.com"]
+  #   }
+  # }
+}
