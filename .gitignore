@@ -23,3 +23,6 @@
 
 # Ignored vscode files
 .vscode/
+
+# Python
+*.pyc
