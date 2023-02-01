@@ -2,8 +2,8 @@ resource "aws_lb" "acox_alb" {
   name               = "test-lb-tf"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.acox_alb_sg.id]
-  subnets            = [aws_subnet.subnet_a.id, aws_subnet.subnet_b.id]
+  security_groups    = var.alb_sg_ids
+  subnets            = var.alb_subnets
 
   enable_deletion_protection = false
 
@@ -31,33 +31,5 @@ resource "aws_lb_listener" "acox_alb_listener" {
       message_body = "Fixed response content"
       status_code  = "200"
     }
-  }
-}
-
-
-resource "aws_security_group" "acox_alb_sg" {
-  name        = "acox-alb-http"
-  description = "Allow HTTP traffic"
-  vpc_id      = aws_vpc.main.id
-
-  ingress {
-    description = "HTTP connection"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    description      = "Internet Access"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-  tags = {
-    Name = "allow-http"
   }
 }

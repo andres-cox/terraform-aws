@@ -27,8 +27,14 @@ resource "aws_route_table" "acox_aws_route_table" {
     Name = "Public Subnet Route Table."
   }
 }
+
 resource "aws_route_table_association" "my_vpc_us_east_1a_public" {
   subnet_id      = aws_subnet.subnet_a.id
+  route_table_id = aws_route_table.acox_aws_route_table.id
+}
+
+resource "aws_route_table_association" "my_vpc_us_east_1b_public" {
+  subnet_id      = aws_subnet.subnet_b.id
   route_table_id = aws_route_table.acox_aws_route_table.id
 }
 
@@ -78,12 +84,12 @@ resource "aws_security_group" "acox_ec2_sg" {
   }
 
   ingress {
-    description = "HTTP connection for Load Balancer"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    # cidr_blocks = ["0.0.0.0/0"]
+    description     = "HTTP connection for Load Balancer"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
     security_groups = [aws_security_group.acox_alb_sg.id]
+    # cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -97,5 +103,32 @@ resource "aws_security_group" "acox_ec2_sg" {
 
   tags = {
     Name = "allow-ssh-http"
+  }
+}
+
+resource "aws_security_group" "acox_alb_sg" {
+  name        = "acox-alb-http"
+  description = "Allow HTTP traffic"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description = "HTTP connection"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description      = "Internet Access"
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "allow-http"
   }
 }
