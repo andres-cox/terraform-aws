@@ -26,7 +26,6 @@ resource "aws_lb_target_group_attachment" "test" {
 
 resource "aws_lb_listener_rule" "static" {
   listener_arn = var.listener_arn
-  # priority     = var.prioriy
 
   action {
     type             = "forward"
@@ -38,10 +37,4 @@ resource "aws_lb_listener_rule" "static" {
       values = [var.condition]
     }
   }
-
-  # condition {
-  #   host_header {
-  #     values = ["example.com"]
-  #   }
-  # }
 }

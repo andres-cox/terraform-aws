@@ -43,8 +43,8 @@ module "acox_tg_1" {
   source = "./modules/aws-tg"
 
   for_each     = module.acox_instances_region_a
+  
   listener_arn = module.acox_alb.alb_listener_arn
-
   vpc_id    = module.acox_network.vpc_id
   tg_name   = "acox-tg-a"
   target_id = each.value.instance_id
@@ -55,6 +55,7 @@ module "acox_tg_2" {
   source = "./modules/aws-tg"
 
   for_each     = module.acox_instances_region_b
+  
   listener_arn = module.acox_alb.alb_listener_arn
   vpc_id       = module.acox_network.vpc_id
   tg_name      = "acox-tg-b"

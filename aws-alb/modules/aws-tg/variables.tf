@@ -13,12 +13,6 @@ variable "tg_name" {
   type        = string
 }
 
-# Listener Vars
-# variable "load_balancer_arn" {
-#   description = "load balancer arn to attach listener"
-#   type        = string
-# }
-
 variable "condition" {
   description = "condition path pattern"
   type        = string

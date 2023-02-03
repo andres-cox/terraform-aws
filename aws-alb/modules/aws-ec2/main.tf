@@ -1,7 +1,6 @@
 resource "aws_instance" "acox_instance" {
-  ami           = var.instance_ami
-  instance_type = var.instance_type
-  # availability_zone      = var.availability_zone
+  ami                    = var.instance_ami
+  instance_type          = var.instance_type
   vpc_security_group_ids = var.vpc_security_group_ids
   subnet_id              = var.subnet_id
   user_data              = file("${path.module}/startup.sh")
